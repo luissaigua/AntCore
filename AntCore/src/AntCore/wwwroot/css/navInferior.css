@@ -1,0 +1,42 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+html{
+  height: 100%;
+  background:radial-gradient( transparent, rgba(0, 40, 50, 1)), url('https://d1jqu7g1y74ds1.cloudfront.net/wp-content/uploads/2010/08/The-Brightest-of-Stars.jpg');
+background-size: 100%;
+}
+
+nav ul{
+  text-align:center;
+
+}
+nav ul li{
+  display: inline-block;  
+  
+}
+
+nav ul li a{
+  font-family:"Open Sans";
+  color: rgba(0, 35, 34, 0.6);
+  font-size: 15px;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+li a{
+  background:rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0;1), inset  0 0 1px rgba(225, 255, 255, 0.8);
+  width:120px;
+  height:120px;
+  line-height:115px;
+  border-radius: 50%;
+  display:block;
+}
+
+li a:hover{
+  transition-duration: 300ms;
+
+  background: rgba(0, 120, 140, 0.6);
+}
+
+
+

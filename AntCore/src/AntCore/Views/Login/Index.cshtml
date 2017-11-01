@@ -1,0 +1,50 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+
+@model Modelo.Entity.Usuarios
+@{
+    ViewBag.Title = "login";
+}
+
+
+
+<div class="container">
+
+    
+
+        <div class="card card-container">
+          
+            
+            <center> <p style="color:hsla(0,100%,50%,1);"><h4> Agencia Nacional de Tránsito Registro de Siniestros </h4></p><img id="profile-img" class="zoom" src="~/images/antuser.png" /></center>
+            
+            <p id="profile-name" class="profile-name-card"></p>
+            <form asp-action="GetSessionData" method="post" class="form-horizontal">
+                <span id="reauth-email" class="reauth-email"></span>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group zoom">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input type="text" asp-for="PU000" class="form-control" placeholder="Usuario" required autofocus>
+                </div>
+                <div class="input-group zoom">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="password" asp-for="PU001" class="form-control" placeholder="Password" AUTOCOMPLETE="off" required>
+                </div>
+                
+                <div id="remember" class="checkbox">
+                    <label>
+                        @*<input type="checkbox" value="remember-me" asp-for="RememberMe"> Recordar*@
+                    </label>
+                </div>
+                @*<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" >Sign in</button>*@
+
+
+                <input type="submit" class="btn btn-lg btn-primary btn-block btn-signin" value="Iniciar sesión" />
+
+            </form><!-- /form -->
+            <a href="#" class="forgot-password">
+                @*¿Olvidó la contraseña?*@
+            </a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->

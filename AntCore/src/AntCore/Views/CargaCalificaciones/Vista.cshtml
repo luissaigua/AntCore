@@ -1,0 +1,137 @@
+﻿@model Modelo.Entity.Calificaciones
+
+<br />
+<br />
+<a class="btn btn-link active" asp-action="Index" asp-controller="CargaCalificaciones" id="btnVerCal"> Carga Calificaciones</a>
+<br />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>  Vista Calificaciones...</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                        @if (@ViewBag.mensajeError != "")
+                        {
+
+                            <div class="form-group">
+                                <div ID="panelMensajeCalE" style="display:none" Class="active smaller">
+                                    <div id="divMensajeCalE" class="alert alert-block alert-danger fade in smaller">
+                                        <strong><label ID="mensajeStrongLabelCalE"> </label></strong>
+                                        <label ID="mensajeLabelCalE"></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                                       
+                   
+                    
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        Fecha inicio *
+                        @Html.TextBoxFor(a => Model.fecinical, null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        Fecha Fin *
+                        @Html.TextBoxFor(a => Model.fecFin, null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        Provincia *
+                        @* @Html.DropDownList("ddl_provincia", (List<SelectListItem>)ViewBag.ObtenerListaProvincias, new { @class = "form-control", @placeholder = "PROVINCIAS" })*@
+                        @Html.DropDownListFor(m => Model.codprov, (List<SelectListItem>)ViewBag.listaProvincias, new { @class = "form-control", @placeholder = "PROVINCIAS" })
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        <br />
+                        <div class="form-group" id="divProcesar">
+                           
+                            <input id="btnProcesar" type="submit" value="Procesar" class="btn btn-primary active" />
+                            
+
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <br />
+                        <div class="form-group" id="divDescargar">
+                            @using (Html.BeginForm("DownloadCal", "CargaCalificaciones", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input type="submit" value="Descargar Excel" class="btn btn-success active" />
+                                @Html.TextBox("tbFechaini", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                                @Html.TextBox("tbFechafin", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                                @Html.TextBox("tbcodprov", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                            }
+                           
+                           
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row" id="divCalificacionesVista">
+
+                    <table class="table small" id="dt_calificacionesVista">
+                        <thead>
+
+                            <tr class="bg-primary">
+
+                                <th>Fecha</th>
+                                <th>Provincia</th>
+                                <th>V. Cumplimiento</th>
+                                <th>V. Puntualidad</th>
+                                <th>V. Calidad</th>
+                                <th>V. Compromiso</th>
+                                <th>T. Calificacion</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var objSin in ViewBag.listaCargaCalificacionesPorFechaVista)
+                            {
+                                <tr>
+
+                                    <td>@objSin.feccal</td>
+
+
+                                    <td>@objSin.nombreProvincia</td>
+                                    <td>@objSin.cumcal</td>
+                                    <td>@objSin.puncal</td>
+                                    <td>@objSin.calcal</td>
+                                    <td>@objSin.comcal</td>
+
+                                    <td>@objSin.totcal</td>
+
+
+                                </tr>
+                            }*@
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-border">
+        <div class="form-group">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="class=" col-xs-3 col-sm-3 col-md-3 col-lg-6"">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel-footer">
+        ........
+    </div>
+</div>

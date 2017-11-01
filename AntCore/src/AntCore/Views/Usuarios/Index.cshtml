@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Modelo.Entity.Usuarios>
+@{
+    ViewBag.Title = "Lista de Usuarios";
+}
+<h2>Usuarios</h2>
+<hr />
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<p>
+    <a class="btn btn-primary btn-lg" id="btbNuevoUser" asp-controller="Usuarios" asp-action="Create">Crear Nuevo</a>
+    @*<a  class="btn btn-primary btn-lg" data-target="#myModal" data-toggle="modal">Crear Nuevo</a>*@
+    @*<a id="btbNuevoUser" class="btn btn-primary btn-lg" data-target="#myModal" data-toggle="modal">Crear Nuevo</a> href="#myModal" data-toggle="modal"*@
+</p>
+@*<div class="well well-sm"><a class="btn btn-primary" href="~/Cliente/Create">Nuevo</a></div>table table-hover table-striped *@
+<table class="table table-striped table-bordered table-hover" id="tb_departamentos">
+    <thead>
+
+        <tr class="bg-primary">
+
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().PUCOD)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PU000)</th>
+
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PU002)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PU003)</th>
+
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PU005)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PDCOD)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PFCOD)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CODAUT)</th>
+
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objDep in Model)
+        {
+            <tr>
+
+                <td>@objDep.PUCOD</td>
+                <td>@objDep.PU000</td>
+
+                <td>@objDep.PU002</td>
+                <td>@objDep.PU003</td>
+
+                <td>@objDep.PU005</td>
+                <td>@objDep.departamento</td>
+                <td>@objDep.funcion</td>
+                <td>@objDep.autoridad</td>
+                <td>
+                    @*@Html.ActionLink("Usuarios", "Edit", new { id = @objDep.PUCOD }, new { @class = "btn btn-primary" })*@
+                    <a class="btnEditarUser " asp-route-id="@objDep.PUCOD" asp-controller="Usuarios" asp-action="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                    
+                    <a class="btn" asp-action="Delete" asp-route-id="@objDep.PUCOD" onclick="return confirm('Seguro quiere eliminar?');"><span class="glyphicon glyphicon-trash"></span></a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Usuarios</h2>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                    Cargando...
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,145 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model Modelo.Entity.Vehiculo
+@{
+    // ViewBag.Title = "Nuevo Departamento";
+
+    Layout = null;
+}
+<h6>hola</h6>
+<div class="panel-body">
+    <h1>hola</h1>
+ </div>
+    <div class="content-border">
+        <div class="form-group">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificación de vehículos involucarados</h4>
+
+            </div>
+            <div ID="panelMensajeVHL" Class="active smaller">
+                <div id="divMensajeVHL" class="alert alert-block alert-danger fade in smaller">
+                    <strong><label ID="mensajeStrongLabelVHL"> </label></strong>
+                    <label ID="mensajeLabelVHL"></label>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <div class="panel-body">
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                        #CodigoVhl
+                        @Html.TextBox("tb_codVHLEdit", null, new { @class = "form-control", @placeholder = "#Siniestro" })
+
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        Tipo de VHL*
+                        @*@Html.DropDownList("ddl_tipo_vhlEdit", (List<SelectListItem>)ViewBag.ObtenerListaTipoVehiculo, new { @class = "form-control" })*@
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                        #Placa*
+                        @Html.TextBox("tb_placvehinvEdit", null, new { @class = "form-control", @placeholder = "#Placa Vehículo" })
+
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                        #Chasis*
+                        @Html.TextBox("tb_chavehinvEdit", null, new { @class = "form-control", @placeholder = "#Chasis" })
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" id="divBuscarPlaca">
+                        <br />
+                        <a class="btn btn-outline btn-default active" id="btnBuscarVhlEdit"><span class="glyphicon glyphicon-search">Buscar</span></a>
+
+                    </div>
+
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-5">
+                        Marca VHL*
+                        @Html.TextBox("tb_marvehinvEdit", null, new { @class = "form-control", @placeholder = "Marca Comercial VHL" })
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-5">
+                        Modelo del VHL*
+                        @Html.TextBox("tb_modvehinvEdit", null, new { @class = "form-control", @placeholder = "Modelo del VHL" })
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                        Año VHL*
+                        @Html.TextBox("tb_anivehinvEdit", null, new { @class = "form-control", @placeholder = "Año VHL" })
+                    </div>
+
+
+
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                        Cilindraje VHL*
+                        @Html.TextBox("tb_cilvehinvEdit", null, new { @class = "form-control", @placeholder = "Cilindraje VHL" })
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                        Material Peligroso
+                        @*@Html.DropDownList("ddl_vhl_materialPeligrosoEdit", (List<SelectListItem>)ViewBag.ObtenerlistadatosTransporteMaterialPeligroso, new { @class = "form-control" })*@
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg3">
+                        Tipo Servicio*
+                        @*@Html.DropDownList("ddl_tipo_servicio_vhlEdit", (List<SelectListItem>)ViewBag.ObtenerlistaServiciosVehiculos, new { @class = "form-control" })*@
+                    </div>
+                    <div class="col-md-1 col-lg-2">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="cb_segprivehinvEdit" value="option1">Seg.Privado
+                        </label>
+                    </div>
+                    <div class="col-md-1 col-lg-2">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="cb_danmatvehinvEdit" value="option2">DañoMaterial
+                        </label>
+
+                    </div>
+                    <div class="col-md-1 col-lg-2">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="cb_matvigvehinvEdit" value="option3">Mat.Vigente
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <h6>Campos Obliogatorios(*)</h6>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-primary active" id="tbGudarVhlInvolucrados">Modificar</a>
+                    <a class="btn btn-info active" id="btLimpiarVHL">Agregar otro vehículo.</a>
+                </div>
+                <div class="row" id="divVehiculosInvolucradosSiniestroEdit" style="display:none">
+
+                    <table class="table small" id="dt_vehiculosSiniestroEdit">
+                        <thead>
+
+                            <tr class="bg-primary">
+
+                                <th>#Placa</th>
+                                <th>#Chasis</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Año</th>
+                                <th>Cilindraje</th>
+                                <th>T.Servicio</th>
+                                <th>T.Vehículo</th>
+                                <th>S.Privado</th>
+                                <th>D.Material</th>
+                                <th>M.Vigente</th>
+
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+
+
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>

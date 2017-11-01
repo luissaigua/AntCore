@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Modelo.Entity.Autoridad
+@{
+    //ViewBag.Title = "Nuevo Departamento";
+    Layout = null;
+}
+
+
+<form asp-action="Create" class="form-control-static">
+    <div class="form-horizontal">
+        <h4>Informacion autoridad:</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CODAUT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CODAUT" class="form-control" />
+                <span asp-validation-for="CODAUT" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DESAUT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DESAUT" class="form-control" />
+                <span asp-validation-for="DESAUT" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EMAAUT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="EMAAUT" class="form-control" />
+                <span asp-validation-for="EMAAUT" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CARAUT" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CARAUT" class="form-control" />
+                <span asp-validation-for="CARAUT" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-primary active" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

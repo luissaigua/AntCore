@@ -1,0 +1,151 @@
+﻿
+@model Modelo.Entity.Consultas
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3> Búsqueda víctimas...</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                   
+                   
+                        <div class="form-group">
+
+                        @using (Html.BeginForm("FindVistaVictimas", "Consultas"))
+                        {
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                Indetificación *
+                                @Html.TextBoxFor(a => Model.id, null, new { @class = "form-control", @placeholder = "Identificación", @title = "Tooltip on top", maxlength = "10" })
+                                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+                                
+                            </div>
+                           
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1">
+                                    <br />
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                                @if (ViewBag.mensajeError != "" && ViewBag.mensajeError != null)
+                                { <div class="col-xs-3 col-sm-3 col-md-3 col-lg-5">
+                                    
+                                      
+                                            <div id="divMensajeCalE" class="alert alert-danger fade in smaller">
+                                                <strong><label ID="mensajeStrongLabelCalE"> </label></strong>
+                                                <label ID="mensajeLabelCalE">@ViewBag.mensajeError</label>
+                                            </div>
+                                       
+
+                                   
+                                </div>
+                                }
+                                }
+
+
+
+
+
+
+                            </div>
+                        <div class="form-group">
+
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+
+
+
+
+
+                        <div class="form-group">
+                            <div ID="panelMensajeCal" Class="active smaller" style="display:none">
+                                <div id="divMensajeCal" class="alert alert-block alert-success fade in smaller">
+                                    <strong><label ID="mensajeStrongLabelCal"> </label></strong>
+                                    <label ID="mensajeLabelCal">@ViewBag.mensajeValidacion</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                   
+
+
+
+                    @*<form action="FindVistaVictimas"> </form>*@
+                      
+
+                    @*}*@
+
+
+                </div>
+            </div>
+           
+
+        </div>
+    </div>
+    <div class="content-border">
+        <div class="form-group">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="class=" col-xs-3 col-sm-3 col-md-3 col-lg-10">
+                        <div class="col-lg-10">
+                            <div class="row" id="divBusqueda">
+                                <table class="table table-bordered table-hover table-striped small" id="dt_busqueda">
+                                        <thead>
+                                            <tr class="bg-primary small">
+                                                <th>#Siniestro</th>
+                                                <th>Fecha</th>
+                                                <th>#Identificación</th>
+                                                <th>Nombres</th>
+                                                <th>Provincia</th>
+                                                <th>Ciudad</th>
+                                                <th>Condición víctima 24H</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var objSin in ViewBag.VistaBusquedaVictimas)
+                                            {
+                                                <tr>
+
+                                                    <td>@objSin.codsin</td>
+
+
+                                                    <td>@objSin.fecsin</td>
+                                                    <td>@objSin.numidenvicinv</td>
+                                                    <td>@objSin.nomvicinv</td>
+                                                <td>@objSin.nomprov</td>
+                                                <td>@objSin.descant</td>
+                                                <td>@objSin.convicinv24</td>
+
+                                                <td>
+                                                    <a class="btn" id="btnModificarSiniestro" asp-action="FindSiniestro" asp-controller="Siniestro" asp-route-id="@objSin.codsin"><span class="glyphicon glyphicon-eye-open"></span>Ver siniestro</a>
+
+                                                </td>
+
+
+                                            </tr>
+                                            }
+                                        </tbody>
+
+
+
+                                    </table>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel-footer">
+        ........
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model Modelo.Entity.Funciones
+@{
+    //ViewBag.Title = "Nueva Función";
+    Layout = null;
+}
+
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Informacion función:</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input id="Hidden1" type="hidden" asp-for="PFCOD" />
+        <div class="form-group">
+            <label asp-for="PF000" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PF000" class="form-control" />
+                <span asp-validation-for="PF000" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <br />
+                <input type="submit" value="Modificar" class="btn btn-primary active" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

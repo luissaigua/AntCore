@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Modelo.Entity.Funciones>
+@{
+    ViewBag.Title = "Lista de Funciones";
+}
+
+
+<h2>Función</h2>
+<hr />
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<p>
+    <a id="btbNuevoFun" class="btn btn-primary btn-lg" data-target="#myModal" data-toggle="modal">Crear Nuevo</a>
+
+</p>
+@*<div class="well well-sm"><a class="btn btn-primary" href="~/Cliente/Create">Nuevo</a></div>table table-hover table-striped *@
+<table class="table table-striped table-bordered table-hover" id="tb_departamentos">
+    <thead>
+
+        <tr class="bg-primary">
+
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PFCOD)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PF000)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PF001)</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var objDep in Model)
+        {
+            <tr>
+
+                <td>@objDep.PFCOD</td>
+                <td>@objDep.PF000</td>
+                <td>@objDep.PF001</td>
+                <td>
+
+                    <a class="btnEditarFun btn" data-id="@objDep.PFCOD" href="#myModal" data-toggle="modal"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@objDep.PFCOD" onclick="return confirm('Seguro quiere eliminar?');"><span class="glyphicon glyphicon-trash"></span></a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Funcion</h2>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                    Cargando...
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

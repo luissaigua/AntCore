@@ -1,0 +1,149 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Modelo.Entity.Usuarios
+
+
+@{
+    //ViewBag.Title = "Nueva Función";
+    //Layout = null;
+}
+<script>
+    $('#divMensajeSiniestro').hide();
+
+
+</script>
+
+
+<form asp-action="Create" class="form-control-static">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3> <i class="fa fa-user-secret"> Creación de usuarios..</i></h3> 
+</div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="form-horizontal">
+                        @*<div class="panel-body">
+                <div ID="panelMensajeSiniestro" Class="active smaller">
+                    <div id="divMensajeSiniestro" class="alert alert-block alert-danger fade in smaller">
+                        <strong><label ID="mensajeStrongLabelSiniestro"> </label></strong>
+                        <label ID="mensajeLabelSiniestro"></label>
+                    </div>
+                </div>
+            </div>*@
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="col-lg-4">
+                                    @Html.LabelFor(model => model.PU000, "Usuario", htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.PU000, null, new { id = "PU000", @class = "form-control", @placeholder = "Usuario (Max 10 caracteres)", @title = "Max(10 caractares)" })
+                                    @Html.ValidationMessageFor(model => model.PU000, "", new { @class = "text-danger" })
+
+
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.LabelFor(model => model.PU001, "Password", htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.PU001, null, new { id = "PU001", @class = "form-control", @placeholder = "Password(Max 10 caracteres)", @type="password", @title = "Max(10 caractares)" })
+                                    @Html.ValidationMessageFor(model => model.PU001, "", new { @class = "text-danger" })
+                              
+
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.LabelFor(model => model.PU002, "Nombres", htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.PU002, null, new { id = "PU002", @class = "form-control", @placeholder = "Nombres(Max 40 caracteres)", @title = "Max(40 caractares)" })
+                                    @Html.ValidationMessageFor(model => model.PU002, "", new { @class = "text-danger" })
+
+
+                                </div>
+
+                                <div class="col-lg-4">
+
+                                    @Html.LabelFor(model => model.PU003, "Apellidos", htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.PU003, null, new { id = "PU003", @class = "form-control", @placeholder = "Apellidos(Max 40 caracteres)", @title = "Max(40 caractares)" })
+                                    @Html.ValidationMessageFor(model => model.PU003, "", new { @class = "text-danger" })
+
+
+
+                                
+
+                                </div>
+
+                                <div class="col-lg-4">
+                                    @Html.LabelFor(model => model.PU006, "Email", htmlAttributes: new { @class = "control-label" })
+                                    @Html.TextBoxFor(model => model.PU006, null, new { id = "PU006", @class = "form-control", @placeholder = "Email(Max 50 caracteres)", @title = "Max(50 caractares)" })
+                                    @Html.ValidationMessageFor(model => model.PU006, "", new { @class = "text-danger" })
+
+
+                                   
+
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <label asp-for="PDCOD" class="control-label"></label>
+                                    @Html.DropDownListFor(m => m.PDCOD,
+              new SelectList(ViewBag.DepList, "PDCOD", "PD000"),
+              "Seleccionar",
+              new { @class = "form-control" })
+                                    <span asp-validation-for="PDCOD" class="text-danger" />
+
+                                </div>
+
+                                <div class="col-lg-4">
+
+                                    <label asp-for="PFCOD" class="control-label"></label>
+                                    @Html.DropDownListFor(m => m.PFCOD,
+              new SelectList(ViewBag.FunList, "PFCOD", "PF000"),
+              "Seleccionar",
+              new { @class = "form-control" })
+                                    <span asp-validation-for="PFCOD" class="text-danger" />
+
+                                </div>
+
+                                <div class="col-lg-4">
+
+                                    <label asp-for="CODAUT" class="control-label"></label>
+                                    @Html.DropDownListFor(m => m.CODAUT,
+              new SelectList(ViewBag.AutList, "CODAUT", "DESAUT"),
+              "Seleccionar",
+              new { @class = "form-control" })
+                                    <span asp-validation-for="CODAUT" class="text-danger" />
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                        <input id="BtnGuardarUsuario" type="submit" value="Guardar usuario" class="btn btn-primary" />
+
+
+
+                    </div>
+                </div>
+               
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+
+
+
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/Validacion/ValidarUsuario.js"></script>
+

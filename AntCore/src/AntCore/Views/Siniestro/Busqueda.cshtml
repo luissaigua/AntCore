@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>dasdas</h2> 
+
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+    #Identificación*
+    @Html.TextBox("tb_IdentificacionVictima1", null, new { @class = "form-control", @placeholder = "#Indentificación", maxlength = "10" })
+</div>
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-1">
+    <br />
+    <a class="btn btn-outline btn-default active"  id="btnBuscarVict1"><span class="glyphicon glyphicon-search">Buscar</span></a>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+    Edad*
+    @Html.TextBox("tb_edadVictima1", null, new { @class = "form-control", @placeholder = "Edad", onkeypress = "return NumCheckEdad(event, this)", maxlength = "2" })
+</div>
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+    sexo*
+    @Html.TextBox("tb_sexov1", null, new { @class = "form-control", @placeholder = "Edad", onkeypress = "return NumCheckEdad(event, this)", maxlength = "2" })
+</div>
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+    nombres*
+    @Html.TextBox("tb_NombresVictima1", null, new { @class = "form-control", @placeholder = "Edad", onkeypress = "return NumCheckEdad(event, this)", maxlength = "2" })
+</div>
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-1" id="divLoaderSinBus" style="display:none">
+    <br />
+    <img src="~/images/loadre.gif" />
+</div>
+<div class="form-group">
+    <div ID="panelMensajeCal" Class="active smaller">
+        <div id="divMensajeCal" class="alert alert-block alert-success fade in smaller">
+            <strong><label ID="mensajeStrongLabelCal"> </label></strong>
+            <label ID="mensajeLabelCal">@ViewBag.resultado</label>
+        </div>
+    </div>
+
+</div>

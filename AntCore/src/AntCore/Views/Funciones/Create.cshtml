@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Modelo.Entity.Funciones
+@{
+    //ViewBag.Title = "Nueva Función";
+    Layout = null;
+}
+
+
+
+<form asp-action="Create" class="form-control-static">
+    <div class="form-horizontal">
+        <h4>Información Función:</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @*<div class="form-group">
+                <label asp-for="PFCOD" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="PFCOD" class="form-control" />
+                    <span asp-validation-for="PFCOD" class="text-danger" />
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label asp-for="PF000" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PF000" class="form-control" />
+                <span asp-validation-for="PF000" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-primary"  />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

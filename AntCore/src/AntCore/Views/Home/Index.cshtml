@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+<style type="text/css">
+    .panel .panel-heading a {
+        color: white;
+    }
+</style>
+
+
+
+
+
+
+<div class="row center">
+    <div class="col-lg-12">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                
+            </ol>
+            <div class="carousel-inner" role="listbox">
+               
+                <div class="item active">
+                    <img src="~/images/Ecuador-Logo.png" alt="ANT" class="img-responsive" />
+
+                </div>
+                <div class="item">
+                    <img src="~/images/20ant1.jpg" alt="ANT" class="img-responsive" />
+                </div>
+
+            </div>
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<br />
+                    <!-- /.panel -->
+
+@if (Context.Session.GetString("codAutoridad") != "SPPAT")
+{
+   
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bar-chart-o fa-fw"></i> Siniestros por Autoridades
+       
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped small">
+                        <thead>
+                            <tr>
+                                <th>Autoridad</th>
+                                <th>Fecha desde</th>
+                                <th>Fecha hasta</th>
+                                <th>#Siniestros</th>
+                                <th>#Siniestros Validados</th>
+                                <th>#Vehículos</th>
+                                <th>#Víctimas</th>
+                                <th>#Acciones</th>
+                                <th>#Daños terceros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @foreach (var d in ViewBag.listaVistaSiniestrosPorAutoridad)
+                                {
+                                    <tr class="small">
+                                        <td>@d.autoridad</td>
+                                        <td>@d.fecha_desde</td>
+                                        <td>@d.fecha_hasta</td>
+                                        <td>@d.num_sininiestros</td>
+                                        <td>@d.num_sininiestros_val</td>
+                                        <td>@d.num_vehiculos</td>
+                                        <td>@d.num_victimas</td>
+                                        <td>@d.num_acciones</td>
+                                        <td>@d.num_danios_terceros</td>
+                                    </tr>
+
+                                 }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+          
+    </div>
+    <!-- /.panel-body -->
+</div>
+</div>
+
+
+}

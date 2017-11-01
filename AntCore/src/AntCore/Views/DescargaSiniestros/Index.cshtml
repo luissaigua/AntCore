@@ -1,0 +1,156 @@
+﻿@model Modelo.Entity.Siniestro
+
+<br />
+<br />
+<div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+        
+        @*<a class="btn btn-primary"><i class="fa fa-renren" href="../Home" ></i> Pantalla Principal</a>*@
+        
+    </div>
+</div>
+
+<br />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>  Descarga Siniestros...</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    @if (@ViewBag.mensajeError != "")
+                    {
+
+                        <div class="form-group">
+                            <div ID="panelMensajeDesS" style="display:none" Class="active smaller">
+                                <div id="divMensajeDesS" class="alert alert-block alert-danger fade in smaller">
+                                    <strong><label ID="mensajeStrongLabelDesS"> </label></strong>
+                                    <label ID="mensajeLabelDesS"></label>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+
+
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        Fecha inicio *
+                        @Html.TextBoxFor(a => Model.fecIni, null, new { id= "tbfecIniSin", @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        Fecha Fin *
+                        @Html.TextBoxFor(a => Model.fecFin, null, new { id = "tbfecFinSin", @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        Provincia *
+                        @* @Html.DropDownList("ddl_provincia", (List<SelectListItem>)ViewBag.ObtenerListaProvincias, new { @class = "form-control", @placeholder = "PROVINCIAS" })*@
+                        @Html.DropDownListFor(m => Model.codprov, (List<SelectListItem>)ViewBag.listaProvincias, new { @class = "form-control", @placeholder = "PROVINCIAS" })
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        Autoridad *
+                        @* @Html.DropDownList("ddl_provincia", (List<SelectListItem>)ViewBag.ObtenerListaProvincias, new { @class = "form-control", @placeholder = "PROVINCIAS" })*@
+                        @Html.DropDownListFor(m => Model.codaut, (List<SelectListItem>)ViewBag.listaAutoridades, new { @class = "form-control", @placeholder = "PROVINCIAS" })
+                    </div>
+
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                        <br />
+                        <div class="form-group" id="divProcesar">
+
+                            <input id="btnProcesarSin" type="submit" value="Procesar" class="btn btn-primary active" />
+
+
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <br />
+                        <div class="form-group" id="divDescargar">
+                            @using (Html.BeginForm("DownloadSin", "DescargaSiniestros", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input type="submit" value="Descargar Excel" class="btn btn-success active" />
+                                @Html.TextBox("tbFechaini", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                                @Html.TextBox("tbFechafin", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                                @Html.TextBox("tbcodprov", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                                @Html.TextBox("tbcodautoridad", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top", style = "display:none" })
+                            }
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row" id="divSiniestrosVista">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover table-condensed table-layout small" style="table-layout:fixed" id="dt_SiniestrosVista">
+                            <thead>
+
+                                <tr class="bg-primary small">
+
+                                    <th>#Siniestro</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Zona</th>
+                                    <th>Provincia</th>
+                                    <th>Ciudad</th>
+                                    <th>Dirección</th>
+                                    <th>Agente Responsable</th>
+                                    <th>Supervisor</th>
+                                    <th>Autoridad</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var objSin in ViewBag.listaCargaCalificacionesPorFechaVista)
+                {
+                    <tr>
+
+                        <td>@objSin.feccal</td>
+
+
+                        <td>@objSin.nombreProvincia</td>
+                        <td>@objSin.cumcal</td>
+                        <td>@objSin.puncal</td>
+                        <td>@objSin.calcal</td>
+                        <td>@objSin.comcal</td>
+
+                        <td>@objSin.totcal</td>
+
+
+                    </tr>
+                }*@
+                            </tbody>
+
+
+
+                        </table>    
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-border">
+        <div class="form-group">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="class=" col-xs-3 col-sm-3 col-md-3 col-lg-6"">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel-footer">
+        ........
+    </div>
+</div>

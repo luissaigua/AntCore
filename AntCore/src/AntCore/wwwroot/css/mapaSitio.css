@@ -1,0 +1,103 @@
+﻿
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 400px;
+      width: 100%;
+    }
+    
+    #optionsDiv {
+      position: absolute;
+      bottom: 17px;
+      width: 100%;
+      padding: 20px 0;
+      z-index: 1;
+      text-align: center;
+    }
+    
+    button {
+      background: white;
+      padding: 7px;
+      border: 1px solid #005e95;
+      font-size: 0.9em;
+      margin: 5px;
+      color: #005e95;
+      font-family: "Avenir Next W01", "Arial", sans-serif;
+    }
+    
+    button:hover {
+      background: #005e95;
+      color: white;
+      cursor: pointer;
+    }
+
+      
+     
+     html,
+    body,  
+    #viewDiv1 {
+      padding: 0;
+      margin: 0;
+      height: 400px;
+      width: 100%;
+    }
+    
+    #optionsDiv1 {
+      position: absolute;
+      bottom: 17px;
+      width: 100%;
+      padding: 20px 0;
+      z-index: 1;
+      text-align: center;
+    }
+    
+    button1 {
+      background: white;
+      padding: 7px;
+      border: 1px solid #005e95;
+      font-size: 0.9em;
+      margin: 5px;
+      color: #005e95;
+      font-family: "Avenir Next W01", "Arial", sans-serif;
+    }
+    
+    button1:hover {
+      background: #005e95;
+      color: white;
+      cursor: pointer;
+    }
+
+     html,
+    body,  
+    #viewDiv2 {
+      padding: 0;
+      margin: 0;
+      height: 400px;
+      width: 100%;
+    }
+    
+    #optionsDiv2 {
+      position: absolute;
+      bottom: 17px;
+      width: 100%;
+      padding: 20px 0;
+      z-index: 1;
+      text-align: center;
+    }
+    
+    button1 {
+      background: white;
+      padding: 7px;
+      border: 1px solid #005e95;
+      font-size: 0.9em;
+      margin: 5px;
+      color: #005e95;
+      font-family: "Avenir Next W01", "Arial", sans-serif;
+    }
+    
+    button1:hover {
+      background: #005e95;
+      color: white;
+      cursor: pointer;
+    }
+

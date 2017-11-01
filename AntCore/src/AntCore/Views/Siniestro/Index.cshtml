@@ -1,0 +1,116 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model List<Modelo.Entity.Siniestro>
+<div class="row">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                @*@if (Context.Session.GetString("PermisoValidador") != "3")//((string)ViewBag.valorPermisoGeneral == "1")
+                {
+                    <a class="btn btn-link" asp-action="CrearSiniestro">Registrar Siniestro</a>
+                }*@
+           
+               
+                  
+                
+                <div class="panel-heading">
+                    <h5>Búsqueda Siniestros</h5>
+                </div>
+                <!-- /.panel-heading -->
+             
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover table-condensed table-layout small" style="table-layout:fixed" id="dt_siniestros">
+                        <thead>
+
+                            <tr class="bg-primary small">
+
+
+
+                                <th>#Siniestro</th>
+                                <th>Fecha</th>
+                                <th>#Fallecidos</th>
+                                <th>#Lesionados</th>
+                                <th>Provincia</th>
+                                <th>Cantón</th>
+                                <th>Zona</th>
+                                <th >Dirección</th>
+                                <th>Foto</th>
+                                <th>Croquis</th>
+                                <th>Estado</th>
+                                <th>Registro Validado</th>
+                                <th>Validar</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var objSin in Model)
+                            {
+                                @if (objSin.REGISTRO_VALIDADO.ToString() == "OK" )
+                                {
+                                    <tr class="small">
+
+                                        <td>@objSin.codsin</td>
+                                        <td>@objSin.fecsin</td>
+                                        <td>@objSin.numfalsin</td>
+                                        <td>@objSin.numlessin</td>
+                                        <td class="ajustar">@objSin.nomprov</td>
+                                        <td class="ajustar">@objSin.descant</td>
+                                        <td>@objSin.zonsin</td>
+                                        <td  class="ajustar" >  <small>@objSin.dirsin</small></td>
+                                        <td class="ajustar"><a class="btn-link" id="btnfotsegeo" asp-action="DownloadFoto1C" asp-controller="Siniestro" asp-route-id="@objSin.fotprigeo">@objSin.fotprigeo</a></td>
+                                        <td class="ajustar"><a class="btn-link" id="btnfotsegeo" asp-action="DownloadFoto2C" asp-controller="Siniestro" asp-route-id="@objSin.fotsegeo">@objSin.fotsegeo</a></td>
+                                        <td>@objSin.desprocsin</td>
+                                        <td>@objSin.REGISTRO_VALIDADO</td>
+                                        <td>
+                                            @*<a class="btn" id="btnModificarSiniestro" asp-action="FindSiniestro" asp-controller="Siniestro" asp-route-id="@objSin.codsin"><span class="glyphicon glyphicon-eye-open"></span></a>*@
+
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+                                else if (objSin.REGISTRO_VALIDADO.ToString() == "PENDIENTE" )
+                                {
+                                    <tr class="danger small">
+
+
+
+                                        <td>@objSin.codsin</td>
+                                        <td>@objSin.fecsin</td>
+                                        <td>@objSin.numfalsin</td>
+                                        <td>@objSin.numlessin</td>
+                                        <td class="ajustar">@objSin.nomprov</td>
+                                        <td class="ajustar">@objSin.descant</td>
+                                        <td>@objSin.zonsin</td>
+                                        <td  class="ajustar" >  <small>@objSin.dirsin</small></td>
+                                        <td class="ajustar"><a class="btn-link" id="btnfotsegeo" asp-action="DownloadFoto1C" asp-controller="Siniestro" asp-route-id="@objSin.fotprigeo">@objSin.fotprigeo</a></td>
+                                        <td class="ajustar"><a class="btn-link" id="btnfotsegeo" asp-action="DownloadFoto2C" asp-controller="Siniestro" asp-route-id="@objSin.fotsegeo">@objSin.fotsegeo</a></td>
+                                        <td>@objSin.desprocsin</td>
+                                        <td>@objSin.REGISTRO_VALIDADO</td>
+
+                                            <td>
+                                                <a class="btn" id="btnModificarSiniestro" asp-action="FindSiniestro" asp-controller="Siniestro" asp-route-id="@objSin.codsin"><span class="glyphicon glyphicon-eye-open"></span></a>
+
+
+                                            </td>
+                                        
+                                        
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+              
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+</div>

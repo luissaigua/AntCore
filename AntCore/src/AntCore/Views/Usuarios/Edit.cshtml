@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model Modelo.Entity.Usuarios
+@{
+//ViewBag.Title = "Nueva Función";
+//Layout = null;
+}
+
+
+<form asp-action="Edit" >
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3> <i class="fa fa-user-secret"> Modificar usuarios..</i></h3>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="form-horizontal">
+                     
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input id="Hidden1" type="hidden" asp-for="PUCOD" />
+                        <div class="col-lg-4">
+                            <label asp-for="PU000" class="control-label"></label>
+
+                            <input asp-for="PU000" class="form-control" />
+                            <span asp-validation-for="PU000" class="text-danger" />
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label asp-for="PU001" class="control-label"></label>
+
+                            <input asp-for="PU001" class="form-control" />
+                            <span asp-validation-for="PU001" class="text-danger" />
+
+                        </div>
+                        <div class="col-lg-4">
+                            <label asp-for="PU002" class="control-label"></label>
+
+                            <input asp-for="PU002" class="form-control" />
+                            <span asp-validation-for="PU002" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label asp-for="PU003" class="control-label"></label>
+
+                            <input asp-for="PU003" class="form-control" />
+                            <span asp-validation-for="PU003" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label asp-for="PU004" class="control-label"></label>
+
+                            <input asp-for="PU004" class="form-control" />
+                            <span asp-validation-for="PU004" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label asp-for="PU006" class="control-label"></label>
+
+                            <input asp-for="PU006" class="form-control" />
+                            <span asp-validation-for="PU006" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label asp-for="PDCOD" class="control-label"></label>
+
+
+                            @Html.DropDownListFor(m => m.PDCOD,
+              new SelectList(ViewBag.DepList, "PDCOD", "PD000"),
+              "Seleccione Departamento",
+              new { @class = "form-control" })
+                            <span asp-validation-for="PDCOD" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+
+
+                            <label asp-for="PFCOD" class="control-label"></label>
+                            @Html.DropDownListFor(m => m.PFCOD,
+              new SelectList(ViewBag.FunList, "PFCOD", "PF000"),
+              "Seleccione Departamento",
+              new { @class = "form-control" })
+                            <span asp-validation-for="PFCOD" class="text-danger" />
+
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <label asp-for="CODAUT" class="control-label"></label>
+                            @Html.DropDownListFor(m => m.CODAUT,
+              new SelectList(ViewBag.AutList, "CODAUT", "DESAUT"),
+              "Seleccione Departamento",
+              new { @class = "form-control" })
+                            <span asp-validation-for="CODAUT" class="text-danger" />
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <br />
+                                <input type="submit" value="Modificar Usuario" class="btn btn-primary active" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+  
+</form>
+
+<div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

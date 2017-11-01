@@ -1,0 +1,1 @@
+﻿$("#fecsin").datepicker({ dateFormat: "yy-mm-dd" }).mask("9999-99-99"); // CONTROL DE FECHA  (AÑO-MES-DIA)

@@ -1,0 +1,417 @@
+﻿@model List<Modelo.Entity.Vehiculo>
+
+
+@{
+    ViewBag.Title = "Vista";
+
+
+}
+
+
+<div class="content-border">
+    <div class="form-group">
+        <div class="row" id="divPrincipalFind">
+            @*<a class="btn btn-link" asp-action="Index">Búsqueda Siniestros</a>*@
+            <div class="panel panel-default" id="panelDatosFind" >
+                <div class="panel-heading">
+                    @if (ViewBag.codAutoridad != "SPPAT")
+                    {
+                        <h4>Validación del Siniestro  #@ViewBag.CodigoSiniestroFind</h4>
+                    }
+                     else
+                    {
+                         <h4>Información del Siniestro  #@ViewBag.CodigoSiniestroFind</h4>
+                    }
+                   
+                </div>
+
+                <div class="panel-body">
+                    <div ID="panelMensajeSiniestroFind" Class="active smaller">
+                        <div id="divMensajeSiniestroFind" class="alert alert-block alert-danger fade in smaller">
+                            <strong><label ID="mensajeStrongLabelSiniestroFind"> </label></strong>
+                            <label ID="mensajeLabelSiniestroFind"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    @if (ViewBag.codAutoridad != "SPPAT")
+                    {
+                        <div id="divBotones">
+                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                <a class="btn btn-success" id="btnModificaSiniestroValidaEstadis"><p class="fa fa-check-square-o"></p> Validado Para Estadística</a>
+
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                @*<a class="btn btn-primary" id="btnDescargarExcelSin"><span class="glyphicon glyphicon-download-alt">  </span> Descargar Excel</a>*@
+                                <form asp-action="Download" asp-controller="Siniestro" asp-route-id="@ViewBag.CodigoSiniestroFind">
+                                    <a class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-download-alt">  </span> <input type="submit" value="Descargar Excel" class="btn btn-sm btn-primary" /></a>
+                                </form>
+                            </div>
+
+
+
+                        </div>
+
+                    }
+                    
+
+
+                </div>
+
+                <section style="background:#efefe9;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="board">
+                                <!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
+                                <div class="board-inner">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                      
+                                           
+                                        
+
+
+
+
+                                    </ul>
+                                </div>
+                                <div class="tab-content">
+                                    @* PANEL DEL SINIESTRO *@
+                                    <div class="tab-pane fade in active" id="home">
+                                        <div class="panel-body small">
+                                            <div class="col-lg-12">
+
+                                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-2">
+                                                    #Siniestro
+                                                    @Html.TextBox("tbSiniestroMod", (string)ViewBag.CodigoSiniestroFind, new { @class = "form-control", @placeholder = "0" })
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                                    Fecha*
+                                                    @Html.TextBox("tbfechaSiniestroMod", null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                                    Hora*
+                                                    @Html.TextBox("tbHoraSiniestroMod", null, new { @class = "form-control", @placeholder = "00:00", onkeypress = "valida_horaEdit(value)" })
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                    Latitud(Y)*
+                                                    @Html.TextBox("tbXSinMod", null, new { @class = "form-control", @placeholder = "0", title = "Rango de -5.014379 a 1.448413 Ejemplo Y=-0.202363", onkeypress = "return NumCheck(event, this)", maxlength = "25" })
+
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                    Longitud(X)*
+                                                   
+                                                        @Html.TextBox("tbYSinMod", null, new { @class = "form-control", @placeholder = "0", title = "Rango de -91.662058 a -75.188745 Ejemplo  X=-78.495769", onkeypress = "return NumCheck(event, this)", maxlength = "25" })
+                                                        @*<span class="input-group-btn">
+                                                            <a class="btn btn-default active" id="btnVerMapaSinEdit" data-target="#myModalMapaSin" data-toggle="modal">Mapa</a>
+                                                        </span>*@
+                                                  
+
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+                                                    Provincia *
+                                                    <select id="ddl_provinciaFindMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                                    Cantón*
+                                                    <select id="ddl_ciudadFindMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+                                                    Parroquia*
+                                                    <select id="ddl_parroquiaMod" class="form-control"></select>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-6" style="display:none">
+                                                    Distrito*
+                                                    <select id="ddl_distritoSiniestroMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6" style="display:none">
+                                                    Circuito*
+                                                    <select id="ddlCircuitoSinMod" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2" style="display:none">
+                                                    Zona*
+                                                    <select id="ddl_tipo_zonaMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-10">
+                                                    Dirección Siniestro*
+                                                    @Html.TextBox("tbdireccionSiniestroMod", null, new { @class = "form-control", @placeholder = "Dirección siniestro" })
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1">
+
+                                                    #Fallecidos
+                                                    @Html.TextBox("tbnumfalsinMod", null, new { @class = "form-control", @placeholder = "0" })
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1">
+                                                    #Lesionados
+                                                    @Html.TextBox("tbnumlessinMod", null, new { @class = "form-control", @placeholder = "0" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <br />
+                                                
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                                    Condición Atmosférica*
+                                                    <select id="ddl_condAtmosfericaMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Condición de la Vía*
+                                                    <select id="ddl_condViaMod" class="form-control"></select>
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Tipo de vía*
+                                                    <select id="ddl_tipoViaMod"  style="font-size:9px" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                                    #Carriles*
+                                                    <select id="ddl_numCarrilesMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                                    Material de Superficie*
+                                                    <select id="ddl_materialSuperficieMod" class="form-control"></select>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <br />
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                                    Límite de velocidad*
+                                                    <select id="ddl_limVelocidadMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                                    Trabajos en la vía*
+                                                    <select id="ddl_trabajosViaEdit" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Lugar de la vía*
+                                                    <select id="ddl_lugarViaMod"  style="font-size:9px" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Control Intersección*
+                                                    <select id="ddl_controlInterseccionMod"  style="font-size:9px" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                                    Señalización Existente*
+                                                    <select id="ddl_senializacionExistenteMod" class="form-control"></select>
+                                                </div>
+
+                                                @*<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                            <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="cb_trabajosViaEdit" value="option1">Trabajos Vía
+                                            </label>
+                                        </div>*@
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <br />
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Curva Existente*
+                                                    <select id="ddl_curvaExistenteMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                    Obstáculos de la Vía*
+                                                    <select id="ddl_obstViaMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                                    Tipo de Siniestro*
+                                                    <select id="ddl_tipoSiniestroMod"  style="font-size:9px" class="form-control"></select>
+                                                </div>
+
+
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                                    Luz Artificial*
+                                                    <select id="ddl_luzArtificialMod" class="form-control"></select>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="display:none">
+                                                    Causa Real Siniestro*
+                                                    <select id="ddl_causaRealSiniestroMod" class="form-control"></select>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <br />
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-12">
+                                                    Causa Probable Siniestro*
+                                                    <select id="ddl_causaProbableSiniestroMod" style="font-size:9px" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <span class="glyphicon glyphicon-circle-arrow-down"> </span><a class="btn btn-link" id="btnVerVistaVhl"><h4> Vehículos involucrados</h4></a>
+                                            <div class="row" id="divVehiculosInvolucrados">
+
+                                                <table class="table small" id="dt_vehiculos">
+                                                    <thead>
+
+                                                        <tr class="bg-primary">
+
+                                                            <th>#Placa</th>
+                                                            <th>Daño material</th>
+                                                            <th>Matrícula vigente</th>
+                                                            <th>#Chasis</th>
+                                                            <th>Marca</th>
+                                                            <th>Modelo</th>
+                                                            <th>Año</th>
+                                                            <th>Cilindraje</th>
+                                                            <th>Seguro privado</th>
+                                                            <th>Material peligroso</th>
+                                                            <th>Tipo de servicio</th>
+                                                            <th>Tipo vehículo</th>
+                                                            <th>SubTipo vehículo</th>
+                                                            <th></th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var objSin in Model)
+                                                        {
+                                                            <tr>
+
+                                                                <td>@objSin.placvehinv</td>
+
+                                                                @if (@objSin.danmatvehinv == true)
+                                                                {
+
+                                                                    <td>SI</td>
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    <td>NO</td>
+                                                                }
+
+                                                                @if (@objSin.matvigvehinv == true)
+                                                                {
+
+                                                                    <td>SI</td>
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    <td>NO</td>
+                                                                }
+                                                                <td>@objSin.chavehinv</td>
+                                                                <td>@objSin.marvehinv</td>
+                                                                <td>@objSin.modvehinv</td>
+                                                                <td>@objSin.anivehinv</td>
+                                                                <td>@objSin.cilvehinv</td>
+
+                                                                @if (@objSin.segprivehinv == true)
+                                                                {
+
+                                                                    <td>SI</td>
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    <td>NO</td>
+                                                                }
+                                                                <td>@objSin.matpelvehinv</td>
+
+                                                                <td>@objSin.desser</td>
+                                                                <td>@objSin.destipveh</td>
+                                                                <td>@objSin.dessubveh</td>
+
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+
+
+
+                                                </table>
+                                            </div>
+                                            <br />
+                                            <span class="glyphicon glyphicon-circle-arrow-down"> </span><a class="btn btn-link" id="btnVerVictimas"><h4> Víctimas involucrados</h4></a>
+                                            <div class="row" id="divVerVictimas">
+                                                <table class="table small" id="dt_victimas">
+                                                    <thead>
+
+                                                        <tr class="bg-primary">
+
+                                                            <th>Tipo identificación</th>
+                                                            <th>#Indentificación</th>
+                                                            <th>Edad</th>
+                                                            <th>Sexo</th>
+                                                            <th>Condición victima 24h</th>
+                                                            <th>Tipo participante</th>
+                                                            <th>Uso de casco</th>
+                                                            <th>Uso de cinturón</th>
+                                                            <th>Posición de la plaza</th>
+                                                            <th>Sospecha consumo alcohol</th>
+                                                            <th>#Placa</th>
+                                                            <th></th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <br />
+                                            <span class="glyphicon glyphicon-circle-arrow-down"> </span><a class="btn btn-link" id="btnVerAccionesPeaton"><h4>Acciones Peaton - Conductor</h4></a>
+                                            <div class="row" id="divVerAccionesPeaton">
+                                                <table class="table small" id="dt_AccionesPeaton">
+                                                    <thead>
+                                                        <tr class="bg-primary">
+                                                            <th>#Indetificación</th>
+                                                            <th>Acción peatón</th>
+                                                            <th>Condición víctima24h</th>
+                                                            <th>#Placa</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <br />
+                                            <span class="glyphicon glyphicon-circle-arrow-down"> </span><a class="btn btn-link" id="btnVerDaniosterceros"><h4>Daños a terceros</h4></a>
+                                            <div class="row" id="divVerDaniosterceros">
+                                                <table class="table small" id="dt_DaniosTerceros">
+                                                    <thead>
+                                                        <tr class="bg-primary">
+                                                            <th>Tipo de daño</th>
+                                                            <th>Observaciones</th>
+                                                            <th>#Siniestro</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <br />
+             
+
+            </div>
+        </div>
+        <div class="panel-body">
+            
+            
+        </div>
+    </div>
+</div>
+
+
+
+

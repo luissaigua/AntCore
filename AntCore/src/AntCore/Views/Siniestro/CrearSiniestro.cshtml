@@ -1,0 +1,1040 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model Modelo.Entity.Siniestro
+
+
+@{
+    ViewBag.Title = "Registrar";
+
+
+}<div class="row">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-sm-2">
+                      <button class="btn  btn-success" id="btnVerModalGeoreferencia" data-target="#myModalMapaBusqueda" data-toggle="modal"><span class="glyphicon glyphicon-globe">  Búsqueda georeferencias </span></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section style="background:#efefe9;">
+    <div class="container">
+        <div class="row">
+            <div class="board">
+                <!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
+                <div class="board-inner">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <div class="liner"></div>
+                        <li class="active" >
+                            <a href="#home" data-toggle="tab" title="Siniestros">
+                                <span class="round-tabs one">
+                                    1 <p class="fa fa-ambulance"></p>
+                                </span>
+                            </a>
+                      
+                        <li id="liVehiculos">
+                            <a href="#profile" id="aLiVehiculos" data-toggle="tab" style="display:none" title="Vehículos involucrados">
+                                <span class="round-tabs two" id="spanSiniestro" disabled="true">
+                                    2 <p class="fa fa-automobile"> </p>
+                                </span>
+                            </a>
+                        </li>
+                        <li id="livictimas" >
+                            
+                                <a href="#messages" id="alivictimas" data-toggle="tab" style="display:none" title="Víctimas involucradas" disabled>
+                                    <span class="round-tabs three">
+                                        3 <p class="fa fa-male"> </p>
+                                    </span>
+                                </a>
+                        </li>
+
+                        <li id="liDanios">
+                            <a href="#settings" id="aliDanios" style="display:none" data-toggle="tab" title="Daños a terceros">
+                                <span class="round-tabs four">
+                                    4 
+                                          <img src="~/images/poste2.jpg" width="33" height="40" />
+                                   
+                                </span>
+                            </a>
+                        </li>
+
+                        <li id="lifinProceso">
+                            <a href="#doner"  id="alifinProceso" style="display:none"  data-toggle="tab" title="Finalizar Proceso">
+                                <span class="round-tabs five">
+                                  5 <i class="glyphicon glyphicon-ok"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    @* PANEL DEL SINIESTROv<p class="fa fa-home"> </p> *@
+                    
+                    <div class="tab-pane fade in active" id="home">
+                        
+                        <div class="panel-body small">
+                            
+                          
+                            <div class="col-lg-12">
+                                
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    Fecha*
+                                    @Html.TextBoxFor(Model => Model.fecsin, null, new { id = "tbfechaSiniestro", @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    Hora*
+                                    @Html.TextBoxFor(Model => Model.horsin, null, new { id = "tbHoraSiniestro", @class = "form-control", @placeholder = "00:00", onkeypress = "valida_hora(value)" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    Latitud(Y)*
+                                   @Html.TextBoxFor(Model => Model.latsin, null, new { id = "tbLatitudSiniestro", @class = "form-control", placeholder = "0", maxlength = "13",title = "Rango de -5.014379 a 1.448413 Ejemplo Y=-0.202363", onkeypress = "return NumCheck(event, this)" })
+                                    
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                                    Longitud(X)*
+                                    <div class="form-group input-group">
+                                        
+                                        @Html.TextBoxFor(Model => Model.lonsin, null, new { id = "tbLonguitudSiniestro", @class = "form-control", maxlength = "13", @placeholder = "0",  title = "Rango de -91.662058 a -75.188745 Ejemplo  X=-78.495769", onkeypress = "return NumCheck(event, this)" })
+                                        <span class="input-group-btn">
+                                            <a class="btn btn-default active" id="btnVerMapaSin" data-target="#myModalMapaSin" data-toggle="modal">Mapa</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    Provincia *
+                                    @Html.DropDownListFor(x => x.codprov, Model.provinciasLista, "SELECCIONAR", new { id = "ddl_provincia", @class = "form-control", @placeholder = "PROVINCIAS", style = "font-size:9px" , disabled = "true" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-6">
+                                    Cantón*
+                                    <select id="ddl_ciudad" class="form-control" style="font-size:11px" disabled></select>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                    Parroquia*
+                                    @Html.DropDownList("ddl_parroquia", (List<SelectListItem>)ViewBag.ObtenerlistaParroquias, new { @class = "form-control", @placeholder = "PROVINCIAS", style = "font-size:11px", disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12" id="divDistritos" style="display:none">
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-6">
+                                    Distrito*
+                                    @Html.DropDownList("ddl_distritoSiniestro", (List<SelectListItem>)ViewBag.ObtenerlistaTodosDistritos, new { @class = "form-control", @placeholder = "PROVINCIAS", style = "font-size:11px" , disabled = "true" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                    Circuito*
+                                    @Html.DropDownList("ddl_circuito", (List<SelectListItem>)ViewBag.ObtenerlistaTodosCiruitos, new { @class = "form-control", @placeholder = "PROVINCIAS", style = "font-size:11px" , disabled = "true" })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-12">
+                                    Dirección Siniestro*
+                                    @Html.TextBoxFor(Model => Model.dirsin, null, new { id = "tbdireccionSiniestro", @class = "form-control", maxlength = "150", @placeholder = "Dirección siniestro", onkeypress = "aMayusculas(this.value,this.id)" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="divTipoZona" style="display:none">
+                                    Zona*
+                                    @Html.DropDownList("ddl_tipo_zona", (List<SelectListItem>)ViewBag.tipoZonaLista, new { @class = "form-control", @placeholder = "0", disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <br />
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1" style="display:none">
+                                    #Fallecidos
+                                    @Html.TextBoxFor(Model => Model.numfalsin, null, new { id = "tbnumfalsin", @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1" style="display:none">
+                                    #Lesionados
+                                    @Html.TextBoxFor(Model => Model.numlessin, null, new { id = "tbnumlessin", @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Condición Atmosférica*
+                                    @Html.DropDownList("ddl_condAtmosferica", (List<SelectListItem>)ViewBag.ObtenerListadoCondicionAtmosferica, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Condición de la Vía*
+                                    @Html.DropDownList("ddl_condVia", (List<SelectListItem>)ViewBag.ObtenerlistadatosCondicionVia, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+
+
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Tipo de vía*
+                                    @Html.DropDownList("ddl_tipoVia", (List<SelectListItem>)ViewBag.ObtenerlistadatosTipoVia, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    #Carriles*
+                                    @Html.DropDownList("ddl_numCarriles", (List<SelectListItem>)ViewBag.ObtenerlistadatosNumeroCarriles, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Material de Superficie*
+                                    @Html.DropDownList("ddl_materialSuperficie", (List<SelectListItem>)ViewBag.ObtenerlistadatosMaterialSuperficieVia, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    Límite de velocidad*
+                                    @Html.DropDownList("ddl_limVelocidad", (List<SelectListItem>)ViewBag.ObtenerlistadatosLimiteVelocidad, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-lg-12">
+                                <br />
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    Trabajos en la vía*
+                                    @Html.DropDownList("ddl_trabajosVia", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control", @placeholder = "0" })
+                                    <label class="checkbox-inline" style="display:none">
+                                        <input type="checkbox" id="cb_trabajosVia" value="option1">Trabajos Vía
+                                    </label>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Lugar de la vía*
+                                    @Html.DropDownList("ddl_lugarVia", (List<SelectListItem>)ViewBag.ObtenerlistadatosLugarVia, new { @class = "form-control", @placeholder = "0" , style = "font-size:11px" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Control Intersección*
+                                    @Html.DropDownList("ddl_controlInterseccion", (List<SelectListItem>)ViewBag.ObtenerlistadatosControlInterseccion, new { @class = "form-control", @placeholder = "0", disabled = "true" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Señalización Existente*
+                                    @Html.DropDownList("ddl_senializacionExistente", (List<SelectListItem>)ViewBag.ObtenerlistadatosSenialitica, new { @class = "form-control" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Curva Existente*
+                                    @Html.DropDownList("ddl_curvaExistente", (List<SelectListItem>)ViewBag.ObtenerlistadatosCurvaExistente, new { @class = "form-control" , disabled="true"})
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Obstáculos de la Vía*
+                                    @Html.DropDownList("ddl_obstVia", (List<SelectListItem>)ViewBag.ObtenerlistadatosObstaculoVia, new { @class = "form-control", @placeholder = "0" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <br />
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-12">
+                                    Causa Probable Siniestro*
+                                    @Html.DropDownList("ddl_causaProbableSiniestro", (List<SelectListItem>)ViewBag.ObtenerlistaCausaProbableSiniestros, new { @class = "form-control", style = "font-size:11px" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <br />
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-6">
+                                    Tipo de Siniestro*
+                                    @Html.DropDownList("ddl_tipoSiniestro", (List<SelectListItem>)ViewBag.ObtenerlistatipoSiniestros, new { @class = "form-control" })
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" id="divLuzArtificial">
+                                    Luz Artificial*
+                                    @Html.DropDownList("ddl_luzArtificial", (List<SelectListItem>)ViewBag.ObtenerlistadatosLuzArtificial, new { @class = "form-control", @placeholder = "0", disabled = "true" })
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                    Campos Obligatorios (*)<br />
+                                    <a class="btn btn-primary" id="btnGuardaSiniestro">Ingresar Siniestro  </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <br />
+                                <div ID="panelMensajeSiniestro" Class="active smaller" style="display:none">
+                                    <div id="divMensajeSiniestro" class="alert alert-block alert-danger fade in smaller">
+                                        <strong><label ID="mensajeStrongLabelSiniestro"> </label></strong>
+                                        <label ID="mensajeLabelSiniestro"></label>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        
+                        </div>
+                    </div>
+                    @* PANEL DEL VEHICULO *@
+                    <div class="tab-pane fade" id="profile" >
+                        <div class="col-lg-12">
+                            <div ID="panelMensajeVHL" Class="active smaller" style="display:none">
+                                <div id="divMensajeVHL" class="alert alert-block alert-danger fade in smaller">
+                                    <strong><label ID="mensajeStrongLabelVHL"> </label></strong>
+                                    <label ID="mensajeLabelVHL"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej1"><p class="fa fa-arrows-v"> </p>  Datos del vehículo</a>
+                                    </h4>
+                                </div>
+                                <div id="respuesta-ej1">
+                                    <div class="table-responsive">
+                                        <div class="col-lg-12">
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1">
+                                                #Siniestro
+                                                @Html.TextBoxFor(Model => Model.codsin, null, new { id = "tb_codsinVHL", @class = "form-control", @placeholder = "#Siniestro" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                Vehículo identificado
+                                                @Html.DropDownList("ddl_vehiculo_identificado", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" id="divTipoVhl" style="display:none">
+                                                Tipo de vehículo*
+                                                @Html.DropDownList("ddl_tipo_vhl", (List<SelectListItem>)ViewBag.ObtenerListaTipoVehiculo, new { @class = "form-control" })
+                                                @Html.TextBoxFor(Model => Model.codtipve, null, new { id = "tb_codtipve", @class = "form-control", @placeholder = "Cilindraje VHL" })
+                                                @Html.ValidationMessageFor(x => x.codtipve, null, new { @class = "label label-danger" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"  id="divSubTipoIdent" style="display:none">
+                                                SubTipo de vehículo*
+                                                <select id="ddl_subtipo_vhl" class="form-control"></select>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" id="divPlaca" style="display:none">
+                                                #Placa*
+                                                @Html.TextBoxFor(Model => Model.placvehinv, null, new { id = "tb_placvehinv", @class = "form-control", @placeholder = "#Placa Vehículo", maxlength = "8" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1" id="divbotonBusuqeda" style="display:none">
+                                                <br />
+                                                <a class="btn btn-default active" id="btnBuscarVhl"><span class="glyphicon glyphicon-search"></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12"  id="divDatosChasis" style="display:none">
+                                          
+                                            <br />
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                #Chasis*
+                                                @Html.TextBoxFor(Model => Model.chavehinv, null, new { id = "tb_chavehinv", @class = "form-control", @placeholder = "#Chasis", maxlength = "20" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                                Marca vehículo*
+                                                @Html.TextBoxFor(Model => Model.marvehinv, null, new { id = "tb_marvehinv", @class = "form-control", @placeholder = "Marca Comercial Vehículo", maxlength = "60" })
+                                                @Html.ValidationMessageFor(x => x.marvehinv, null, new { @class = "label label-danger" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                                Modelo vehículo*
+                                                @Html.TextBoxFor(Model => Model.modvehinv, null, new { id = "tb_modvehinv", @class = "form-control", @placeholder = "Modelo del vehículo", maxlength = "60" })
+                                                @Html.ValidationMessageFor(x => x.modvehinv, null, new { @class = "label label-danger" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                Año vehículo*
+                                                @Html.TextBoxFor(Model => Model.anivehinv, null, new { id = "tb_anivehinv", @class = "form-control", @placeholder = "Año VHL", maxlength = "4" })
+                                                @Html.ValidationMessageFor(x => x.anivehinv, null, new { @class = "label label-danger" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                Cilindraje vehículo*
+                                                @Html.TextBoxFor(Model => Model.cilvehinv, null, new { id = "tb_cilvehinv", @class = "form-control", @placeholder = "Cilindraje VHL", maxlength = "10" })
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-12"  id="divTranspMaterialPeligroso" style="display:none">
+                                            <br />
+                                            
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-5">
+                                               
+                                                Transporte de materiales peligrosos*
+                                                @Html.DropDownList("ddl_vhl_materialPeligroso", (List<SelectListItem>)ViewBag.ObtenerlistadatosTransporteMaterialPeligroso, new { @class = "form-control" })
+                                                @Html.TextBoxFor(Model => Model.matpelvehinv, null, new { id = "tb_matpelvehinv", @class = "form-control", @placeholder = "Cilindraje VHL" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+                                                Tipo de servicio del vehículo*
+                                                @Html.DropDownList("ddl_tipo_servicio_vhl", (List<SelectListItem>)ViewBag.ObtenerlistaServiciosVehiculos, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                Seguro privado*
+                                                @Html.DropDownList("ddl_seguro_privado_vhl", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control" })
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-lg-12" id="divdaniomaterial" style="display:none">
+                                            <br />
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-5">
+                                                Daño material del vehículo*
+                                                @Html.DropDownList("ddl_danio_material", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+                                                Matricula vigente*
+                                                @Html.DropDownList("ddl_matricula_vigente", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control" })
+                                            </div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-md-5">
+                                                    Campos Obliogatorios(*)
+                                                    <a class="btn btn-primary active" id="tbGudarVhlInvolucrados">Ingresar vehículo</a>
+                                                </div>
+
+
+                                            
+                                        </div>
+
+                                        
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej2"><p class="fa fa-arrows-v"> </p>  Vista vehículos ingresados</a>
+                                    </h4>
+                                </div>
+                                <div id="respuesta-ej2" style="display:none">
+                                    <div class="panel-body">
+                                        <div class="col-lg-8">
+                                            <a class="btn btn-info active" id="btLimpiarVHL">Insertar otro vehículo</a>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            
+                                            <a class="btn btn-warning active" id="btnSiguienteVhl">Ingresar víctimas  involucradas   <p class="fa fa-angle-double-right"> </p>  </a> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="table-responsive" id="divVehiculosInvolucradosSiniestro">
+                                                            <br />
+                                                            <table class="table table-striped small" id="dt_vehiculosSiniestro">
+                                                                <thead>
+
+                                                                    <tr class="bg-primary smaller">
+
+                                                                        <th>#Placa</th>
+                                                                        <th>#Chasis</th>
+                                                                        <th>Marca</th>
+                                                                        <th>Año</th>
+                                                                        <th>Tipo servicio</th>
+                                                                        <th>Tipo vehículo</th>
+                                                                        <th>SubTipo vehículo</th>
+                                                                        <th>Seguro Privado</th>
+                                                                        <th>Daño material</th>
+                                                                        <th>Matrícula vigente</th>
+
+                                                                        <th></th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="table smaller">
+                                                                  
+
+                                                                </tbody>
+
+
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    @* PANEL DE LA VICTIMA *@
+                    <div class="tab-pane fade" id="messages" >
+                        <div class="col-lg-12">
+                            <div ID="panelMensajeVictimas" Class="active smaller" style="display:none">
+                                <div id="divMensajeVictimas" class="alert alert-block alert-danger fade in smaller">
+                                    <strong><label ID="mensajeStrongLabelVictimas"> </label></strong>
+                                    <label ID="mensajeLabelVictimas"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej3"> Datos de la víctima</a>
+                                    </h4>
+                                </div>
+
+                                <div id="respuesta-ej3">
+                                    <div class="panel-body">
+                                        <div class="col-lg-12">
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1">
+                                                #Siniestro
+                                                @Html.TextBox("tb_codsinVictimas", null, new { @class = "form-control", @placeholder = "#Siniestro" })
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+                                                Vehículo*
+                                                <select class="form-control" id="ddl_vhlVictimas"></select>
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                Tipo de Identifiación*
+                                                @Html.DropDownList("ddl_tipoIdentificacion", (List<SelectListItem>)ViewBag.ObtenerlistadatosTipoIdentificacion, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                Identificación*
+                                                @Html.TextBox("tb_IdentificacionVictima", null, new { @class = "form-control", @placeholder = "#Identificación", maxlength = "10" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1">
+                                                <br />
+                                                <a class="btn btn-outline btn-default active"  style="display:none" id="btnBuscarVict"><span class="glyphicon glyphicon-search"></span></a>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1" id="divLoaderSin" style="display:none">
+                                                <br />
+                                                <img src="~/images/ajax-loader (2).gif" /> Buscando...
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <br />
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                                Edad*
+                                                @Html.TextBox("tb_edadVictima", null, new { @class = "form-control", @placeholder = "Edad", onkeypress = "return NumCheckEdad(event, this)", maxlength = "2" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                Sexo*
+                                                @Html.DropDownList("ddl_generoVictima", (List<SelectListItem>)ViewBag.ObtenerlistadatosSexo, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-7">
+                                                Condicion de la víctima 24h*
+                                                @Html.DropDownList("ddl_condicionVictimas24", (List<SelectListItem>)ViewBag.ObtenerlistadatosCondicionVictimas24, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                                <br />
+                                                Tipo participante*
+                                                @Html.DropDownList("ddl_tipoParticipante", (List<SelectListItem>)ViewBag.ObtenerlistadatosTipoParticipante, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                                <br />
+                                                Uso del casco*
+                                                @Html.DropDownList("ddl_uso_casco", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                                <br />
+                                                Uso del cinturon*
+                                                @Html.DropDownList("ddl_uso_cinturon", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                                <br />
+                                                Presunción de consumo de alcohol*
+                                                @Html.DropDownList("ddl_consumo_alcohol", (List<SelectListItem>)ViewBag.ObtenerlistadatosValoresSiNo, new { @class = "form-control", @placeholder = "0" })
+                                            </div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-10" style="display:none" id="divAccionesPeaton">
+                                                <br />
+                                                Acciones del peatón o conductor (puede seleccionar mas de una opción)*
+                                                @Html.ListBox("ddl_accionesPeaton", (List<SelectListItem>)ViewBag.ObtenerlistadatosAccionesPeaton, new { @class = "form-control", style = "font-size:11px" })
+
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-6">
+                                                        Posición de la plaza
+                                                        <table border="1" class="small">
+
+
+                                                            <tr>
+                                                                <td style=padding:5px;background-color:#0489B1;color:#F2F2F2></td>
+                                                                <td style=padding:5px;background-color:#0489B1;color:#F2F2F2; font: bold;>Izquierdo</td>
+                                                                <td style=padding:5px;background-color:#0489B1;color:#F2F2F2; font: bold;>Central</td>
+                                                                <td style=padding:5px;background-color:#0489B1;color:#F2F2F2;font: bold;>Derecho</td>
+
+                                                            </tr>
+
+                                                            <tr>
+
+                                                                <th style=padding:5px;background-color:#0489B1;color:#F2F2F2;font: bold>Frontal</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_1S" value="1">1</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_2S" value="2">2</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_3S" value="3">3</th>
+
+                                                            </tr>
+                                                            <tr>
+
+                                                                <th style=padding:5px;background-color:#0489B1;color:#F2F2F2;font: bold;>Central</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_4S" value="4">4</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_5S" value="5">5</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_6S" value="6">6</th>
+
+                                                            </tr>
+                                                            <tr>
+
+                                                                <th style=padding:5px;background-color:#0489B1;color:#F2F2F2;font: bold;>Trasero</th>
+                                                                <th style=padding:5px>  <input type="checkbox" id="cb_7S" value="7">7</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_8S" value="8">8</th>
+                                                                <th style=padding:5px><input type="checkbox" id="cb_9S" value="9">9</th>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <th style=padding:5px;background-color:#D8D8D8;><input type="checkbox" id="cb_10S" value="10">Balde</th>
+                                                                <th style=padding:5px;background-color:#D8D8D8;> <input type="checkbox" id="cb_11S" value="11">De Pie</th>
+                                                                <th style=padding:5px;background-color:#D8D8D8;> <input type="checkbox" id="cb_12S" value="12">Otros</th>
+                                                                <th style=padding:5px;background-color:#D8D8D8;> <input type="checkbox" id="cb_13S" value="13">Niño en brazos</th>
+                                                            </tr>
+
+
+                                                            <!-- Cerramos tabla  BDBDBD-->
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                        <div class="col-lg-8">
+                                           
+                                        </div>
+                                         
+                                            <div class="col-lg-12">
+
+                                            </div>
+                                            <div class="col-lg-12">
+
+                                            </div>
+
+
+                                            <div class="col-lg-12">
+                                                <br />
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                    Campos Obliogatorios(*)
+                                                    <a class="btn btn-primary active" id="tbGudarVictimas">Ingresar victima</a>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="panel-body small">
+
+                                            </div>
+
+
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej4"><p class="fa fa-arrows-v"> </p>  Vista víctima ingresada</a>
+                                    </h4>
+                                </div>
+                                <div id="respuesta-ej4" style="display:none">
+                                    <div class="panel-body">
+                                        <div class="col-lg-6">
+                                            <a class="btn btn-info active" id="btnLimpiarVictimas">Insertar otra víctima</a>
+                                            <br />
+                                        </div>
+                                        <div class="col-lg-6"></div>
+                                        <div class="col-lg-4">
+                                            <a class="btn btn-warning active" id="btnSiguienteVDanioTercero">Ingresar daños a terceros   <p class="fa fa-angle-double-right"> </p>    </a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="able-responsive">
+                                                            <br />
+                                                            <table class="table table-bordered table-striped small" id="dt_victimasSiniestro">
+                                                                <thead>
+
+                                                                    <tr class="bg-primary small">
+
+                                                                        <th>Tipo identificación</th>
+                                                                        <th>Identificación</th>
+                                                                        <th>Edad</th>
+                                                                        <th>Sexo</th>
+                                                                        <th>Condicion víctima 24h</th>
+                                                                        <th>Tipo participante</th>
+                                                                        <th>Uso del Casco</th>
+                                                                        <th>Uso del Cinturón</th>
+                                                                        <th>Posición de la plaza</th>
+                                                                        <th>Consumo de alcohol</th>
+
+                                                                        <th></th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings" class="tab-pane fade">
+                        <div class="col-lg-12">
+                            <div ID="panelMensaje" Class="active smaller" style="display:none">
+                                <div id="divMensaje" class="alert alert-block alert-danger fade in smaller">
+                                    <strong><label ID="mensajeStrongLabel"> </label></strong>
+                                    <label ID="mensajeLabel"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej5S"><p class="fa fa-arrows-v"> </p>  Datos de daños a terceros</a>
+                                    </h4>
+                                </div>
+
+                                <div id="respuesta-ej5S">
+                                    <div class="panel-body">
+                                        <div class="col-lg-12">
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-1">
+                                                #Siniestro
+                                                @Html.TextBoxFor(Model => Model.codsin, null, new { id = "tb_codsinDanioTercero", @class = "form-control", @placeholder = "#Siniestro" })
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-8">
+                                                Tipo de daño*
+                                                @Html.DropDownList("ddl_tipoDanioTercero", (List<SelectListItem>)ViewBag.ObtenerlistaTipoDaniosTerceros, new { @class = "form-control" })
+                                                @Html.TextBoxFor(Model => Model.coddater, null, new { id = "tb_coddater", @class = "form-control" })
+                                                @Html.ValidationMessageFor(x => x.coddater, null, new { @class = "label label-danger" })
+                                            </div>
+                                            
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <br />
+                                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-12">
+                                                Observaciones
+                                                @Html.TextBoxFor(Model => Model.obsdater, null, new { id = "tb_obsdater", @class = "form-control", @placeholder = "Observaciones", onkeypress = "aMayusculas(this.value,this.id)", maxlength = "200" })
+                                            </div>
+                                           
+                                        </div>
+                                   
+                                        <div class="col-lg-12">
+
+                                        </div>
+                                        <div class="col-lg-12">
+
+                                        </div>
+
+
+                                        <div class="col-lg-12">
+                                            <br />
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                Campos Obliogatorios(*)
+                                                <a class="btn btn-primary active" id="tbGudarDanioTercero">Ingresar daño a terceros</a>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="panel-body small">
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body small">
+                            <div class="panel panel-default" id="collapseOnePanel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="alternar-respuesta-ej6S"><p class="fa fa-arrows-v"> </p>  Vista daños a terceros</a>
+                                    </h4>
+                                </div>
+                                <div id="respuesta-ej6S" style="display:none">
+                                    <div class="panel-body">
+                                        <div class="col-lg-6">
+                                            <a class="btn btn-info active" id="btnLimpiarDanios">Insertar otro daño a terceros</a>
+                                            <br />
+                                        </div>
+                                        <div class="col-lg-6"></div>
+                                        <div class="col-lg-4">
+                                            <a class="btn btn-warning active" id="btnSiguienteFinalizarProceso">Finalizar proceso   <p class="fa fa-angle-double-right"> </p> </a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="table-responsive">
+                                                            <br />
+                                                            <table class="table table-bordered table-striped table-hover small" style="table-layout:fixed" id="dt_DaniosTercerosSiniestros">
+                                                                <thead>
+
+                                                                    <tr class="bg-primary small">
+
+                                                                        <th>Tipo de daño</th>
+                                                                        <th>Observaciones</th>
+                                                                        <th>#Siniestro</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="doner">
+                        <div class="text-center">
+                            <i class="img-intro icon-checkmark-circle"></i>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="table-responsive">
+                                                <br />
+                                                <table class="table table-bordered table-striped small" id="dt_siniestros_procesos">
+                                                    <thead>
+
+                                                        <tr class="bg-primary small">
+
+                                                            <th>#Siniestro</th>
+                                                            <th>Fecha</th>
+                                                            <th>#Fallecidos</th>
+                                                            <th>#Lesionados</th>
+                                                            <th>Provincia</th>
+                                                            <th>Cantón</th>
+                                                            <th>Zona</th>
+                                                            <th   >Dirección</th>
+
+
+
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+
+                                                </table>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                     
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4" >
+                            <input type="submit" class="btn btn-success btn-lg btn-block" id="btnFinalizarProcesoSiniestro" value="Guardar siniestro" />
+                        </div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4"><a asp-area="" class="btn btn-primary btn-lg btn-block" asp-controller="Siniestro" id="btnNuevoSiniestro" asp-action="CrearSiniestro" style="display:none">Ingresar nuevo siniestro</a></div>
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-12">
+                            <br />
+                           
+                        </div>
+                        
+                        <p class="narrow text-center">
+                            <div class="col-lg-12">
+                                <br/>
+                                <div ID="panelMensajeFinalizar" Class="active" style="display:none">
+                                    <div id="divMensajeFinalizar" class="alert alert-block alert-success fade in">
+                                        <strong><label ID="mensajeStrongLabelFinalizar"> </label></strong>
+                                        <label ID="mensajeLabelFinalizar"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                 </div>
+            </div>
+        </div>
+    </div>
+</section> 
+
+<br />
+<ul class="progress-indicator">
+    <li class="completed" id="lisinprog"> <span class="bubble"></span>1. Ingresar siniestro </li>
+    <li id="liingreprog"><span class="bubble"></span>2. Ingresar vehículo </li>
+    <li id="livicprog"> <span class="bubble"></span>3. Ingresar víctima </li>
+    <li id="lidanioprog"> <span class="bubble"></span>4. Ingresar daños a terceros </li>
+    <li id="lifinaprog"> <span class="bubble"></span>5. Finalizar proceso </li>
+</ul>
+<div id="fotocargandoSin" style="width:100%;text-align: center;display:none">
+    <img src="http://www.lacosox.org/sites/default/files/cargando.gif">
+</div>
+
+<div class="col-lg-12" style="display:none">
+    <div id="divBotonesSecundarios" class="form-group-lg">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-8">
+
+            <button type="button" class="btn btn-default active" id="btnModalVhlInvolucrados" data-toggle="modal" data-target="#myModal">Vehículos Involucrados</button>
+            <button type="button" class="btn btn-default active" id="btnModalVictimas" data-toggle="modal" data-target="#myModalVictimas">Victimas Involucradas</button>
+            @*<button type="button" class="btn btn-default active" id="btnModalAccionesPeaton" data-toggle="modal" data-target="#myModalAccionesPeaton">Acciones Peaton</button>*@
+            <button type="button" class="btn btn-default active" id="btnModalDaniosTerceros" data-toggle="modal" data-target="#myModalDaniosMateriales"  style="display:none">Daños Materiales</button>
+        </div>
+        <label id="lbCodigoSiniestroGuardadoOculto" style="display:none"></label>
+        <label id="lbCodigoGeo"></label>
+        <label id="lbLatitudGeo"></label>
+        <label id="lbLonguitudGeo"></label>
+        <label id="lbcod_circ_1" style="display:none"></label>
+        <label id="lbdpa_canton" style="display:none"></label>
+        <label id="lbdpa_parroq" style="display:none"></label>
+        <label id="lbdpa_provin" style="display:none"></label>
+        <label id="lbdpa_coddist" style="display:none"></label>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalMapaSin" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+
+            </div>
+           
+            <div class="modal-body" id="mapSitio">
+                @*<div id="optionsDiv">
+                   
+                    <button id="bounceQuito1" class="btn btn-google-plus" type="button">Ver Ubicación</button>
+                </div>*@
+                <div id="map"  style="position:relative; width:100%; height:450px; border:1px solid #000;">
+                    
+                </div>
+               
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <span id="info" style="position:absolute; left:15px; bottom:5px; color:#000; z-index:50;"></span>
+                    <div class="col-lg-2">
+                        Latitud:<input type="text" class="form-control" name="lat" id="lat">
+                    </div>
+                    <div class="col-lg-2">
+                        Longitud:<input type="text" class="form-control" name="lng" id="lng">
+                    </div>
+                    <div class="col-lg-3">
+                        
+                        <button id="acercarBtn" class="btn btn-primary btn-lg">Acercar</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="button" class="btn btn-info btn-lg" id="btnCargarDireccionesMapa"  data-dismiss="modal"><i class="fa fa-check"></i>Cargar dirección</button>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModalMapaBusqueda" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Búsqueda de georeferencias</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="table-responsive">
+                                    <br />
+                                    <table class="table table-bordered table-striped table-hover small" id="dt_georeferencias">
+                                        <thead>
+
+                                            <tr class="bg-primary small">
+                                                <th>Seleccionar</th>
+                                                <th>#Codigo</th>
+                                                <th>Longitud</th>
+                                                <th>Latitud</th>
+                                                <th>Observaciones</th>
+                                                <th>Foto</th>
+                                                <th>Croquis</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                         
+                                            @foreach (var objSin in ViewBag.ObtenerlistaGeoreferencias)
+                                            {
+                                                <tr class="small">
+
+                                                    <td>
+                                                        
+                                                             @*<a class="btnModalVehiculoEdit btn"  data-id="@objSin.codvehinv" data-toggle="modal" data-target="#myModalVehiculoEdit" ><p class="fa fa-pencil-square-o"></p></a>*@
+                                                        <a class="btnSeleccionarGeo btn" data-id="@objSin.codgeo"><span class="glyphicon glyphicon-hand-right">Seleccionar</span></a>
+
+                                                    </td>
+                                                    <td>@objSin.codgeo</td>
+                                                    <td>@objSin.longeo</td>
+                                                    <td>@objSin.latgeo</td>
+                                                    <td  class="ajustar" >@objSin.observaciones</td>
+                                                   
+                                                    <td>
+                                                    @using (Html.BeginForm("DownloadFoto1", "Siniestro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                        {
+                                                            
+                                                            <input type="submit" class="btn-link" name="fotprigeo" id="fotprigeo" value="@objSin.fotprigeo" />
+                                                           
+                                                        }
+                                                        @*<a class="btn-link" asp-controller="Siniestro" id="fotprigeo" asp-action="DownloadFoto1">@objSin.fotprigeo</a>
+                                                        @Html.TextBoxFor(a=>Model.fotprigeo, @objSin.fotprigeo, new { @class = "form -control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                                                        <a id="lnkImprimirRepImpresiones" type="submit" href="@Url.Action("GenerarReporteImpresiones", "Reporte")" class="btn btn-warning"><i class="icon-white"></i>&nbsp;Imprimir</a>*@
+                                                    </td>
+
+
+                                                    <td>
+                                                        @using (Html.BeginForm("DownloadFoto2", "Siniestro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                        {
+
+                                                            <input type="submit" class="btn-link" name="fotsegeo" id="fotsegeo" value="@objSin.fotsegeo" />
+
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<input type="text" class="form-control" name="tipoVhl" id="tbTipoVhlVictima" style="display:none">
+@Html.TextBox("tb_NombresVictima", null, new { @class = "form-control", @placeholder = "nombres",style = "display:none" })
+@*<a class="btn btn-info active" asp-action="CrearSiniestro" id="btnNuevoSiniestro">Nuevo</a>*@
+
+

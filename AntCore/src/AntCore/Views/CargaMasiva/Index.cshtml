@@ -1,0 +1,196 @@
+﻿
+
+@model Modelo.Entity.Siniestro
+  <!-- /.col-lg-4 -->
+    <br />
+    <br />
+    <br />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>  Carga Masiva...</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+           
+            <div class="col-lg-5">
+                <div class="form-group">
+                   @*// <form asp-action="Validar" class="form-control-static">*@
+                       
+                    @using (Html.BeginForm("DownloadFormatoCargaMasiva", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <p class="fa fa-download"> </p> <input type="submit" value="FormatoCargaMasiva.xlsm" name="formatoCargaMasiva" class="btn btn-link btn-xs" />
+                    }
+                        @using (Html.BeginForm("Validar", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-5">
+                                </div>
+                                <label>  </label>  <img src="~/images/excel.jpg" height="50" /> EXCEL
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+                                    <label>
+                                        Fecha *
+
+                                    </label>
+
+                                </div>
+
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-4">
+
+                                    @Html.TextBoxFor(a => Model.fecsin, null, new { @class = "form-control", @placeholder = "aaa-mm-dd", @title = "Tooltip on top" })
+                                </div>
+
+
+
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <br />
+                                <img src="~/images/carpeta.jpg" height="40" /> <label>Seleccionar archivo...</label>
+                                <input type="file" name="file" id="file" value="@ViewBag.fileName" />
+                            </div>
+                            <div class="form-group" style="display:none">
+                                
+                                <input id="btnValidar" type="submit" value="Validar" class="btn btn-default btn-lg btn-block active"  />
+                            </div>
+
+                           
+                                <div class="form-group" id="divObservacionesCarga">
+                                    <br />
+                                    <label>Observaciones</label>
+                                    
+                                    @Html.TextBoxFor(a => Model.obscarga, null, new { @class = "form-control", @placeholder = "Obervaciones", @title = "Tooltip on top" })
+                                </div>
+                                <div class="form-group" id="divBtnCargar">
+                                    <input id="btnCargar" type="submit" value="Cargar" class="btn btn-primary btn-lg btn-block" />
+
+                                </div>
+                            
+
+
+
+
+                            @if (@ViewBag.mensajeValidacion != "" && @ViewBag.cantidadRegistros == 0)
+                            {
+
+                                <div class="form-group small">
+                                    <div ID="panelMensajeCal" Class="active smaller">
+                                        <div id="divMensajeCal" class="alert alert-block alert-success fade in smaller">
+                                            <strong><label ID="mensajeStrongLabelCal"> </label></strong>
+                                            <label ID="mensajeLabelCal">@ViewBag.mensajeValidacion</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                            @if (@ViewBag.mensajeError != "" )
+                            {
+
+                                <div class="form-group small">
+                                    <div ID="panelMensajeCalE" Class="active smaller">
+                                        <div id="divMensajeCalE" class="alert alert-block alert-danger fade in smaller">
+                                            <strong><label ID="mensajeStrongLabelCalE"> </label></strong>
+                                            <label ID="mensajeLabelCalE">@ViewBag.mensajeError</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        }
+
+              </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row" id="divCalificaciones">
+
+                    <table class="table small" id="dt_codificaciones">
+                        <thead>
+
+                            <tr class="bg-primary">
+
+                                <th>#Registro</th>
+                                <th>Descripcion</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var objSin in ViewBag.ListaCodificaciones)
+                            {
+                                <tr>
+                                    <td>Fila- @objSin.Value</td>
+                                    <td>@objSin.Text</td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+            </div>
+@if (@ViewBag.mensajeValidacion != "")
+{
+    <div class="col-lg-12">
+        <div class="row" id="divCargaMasiva">
+
+            <table class="table small" id="dt_CargaMasiva">
+                <thead>
+
+                    <tr class="bg-primary">
+
+                        <th>#Siniestro</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Zona</th>
+                        <th>Provincia</th>
+                        <th>Canton</th>
+                        <th>Dirección</th>
+                        <th>Agente Responsable</th>
+                        <th>Supervisor</th>
+                        <th>Autoridad</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var objSin in @ViewBag.listaVistaSiniestrosCm)
+                    {
+                        <tr>
+
+                            <td>@objSin.codsin</td>
+                            <td>@objSin.fecsin</td>
+                            <td>@objSin.horsin</td>
+                            <td>@objSin.zonsin</td>
+                            <td>@objSin.provincia</td>
+                            <td>@objSin.canton</td>
+                            <td>@objSin.dirsin</td>
+                            <td>@objSin.agente_responsable</td>
+                            <td>@objSin.supervisor_responsable</td>
+                            <td>@objSin.autoridad</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+               
+
+
+            </table>
+        </div>
+    </div>
+}
+      @if (@ViewBag.cantidadRegistros == 0)
+      { 
+          <input type="text" id="tbCantidadRegistros" value="@ViewBag.cantidadRegistros" style="display:none"/>
+      }
+        </div>
+    </div>
+            
+            
+    <div class="panel-footer">
+        ........
+    </div>
+</div>
+
+<!-- /.col-lg-4 -->
